@@ -1,10 +1,11 @@
 package main
 
 import (
+	"log"
 	"net/http"
 )
 
 func main() {
 	http.Handle("/", http.FileServer(http.Dir("./")))
-	http.ListenAndServe(":8383", nil)
+	log.Fatal(http.ListenAndServe(":8383", nil))
 }

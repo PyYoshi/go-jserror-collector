@@ -71,5 +71,5 @@ func main() {
 	jh := &JsecHandler{FLogger: flogger, FluentTag: "debug.jsec"}
 	mux.Handle("/jsec", jh)
 	log.Println("Listening...")
-	http.ListenAndServe(":8080", mux)
+	log.Fatal(http.ListenAndServe(":8080", mux))
 }
