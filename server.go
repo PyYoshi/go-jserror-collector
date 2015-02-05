@@ -51,7 +51,6 @@ func (jh *JsecHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 			var jsErrorMessage JSErrorMessage
 			err = json.Unmarshal([]byte(query["r"][0]), &jsErrorMessage)
 			if err == nil {
-				log.Print(jsErrorMessage)
 				jh.SendLog(&jsErrorMessage)
 			}
 		}
