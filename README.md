@@ -41,6 +41,13 @@ go run server.go
 
 2. examples/index.html を開く
 
+```bash
+cd examples
+go run main.go
+```
+
+http://127.0.0.1:8383/ をブラウザで開く
+
 3. fluentdへログが流れていることを確認
 
 ```bash
