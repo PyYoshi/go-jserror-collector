@@ -29,7 +29,10 @@ type JSErrorMessage struct {
 	Message       string `json:"m"`
 	JavascriptURL string `json:"u"`
 	LineNumber    int64  `json:"l"`
-	Column        int64  `json:"c"`
+	ColumnNumber  int64  `json:"c"`
+	RemoteAddr    string `json:"r"`
+	UserAgent     string `json:"a"`
+	Timestamp     string `json:"t"`
 }
 
 // JsecHandler 送られてきたJSONをfluentdへ飛ばすHTTPハンドラ
@@ -51,6 +54,11 @@ func (jh *JsecHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 			var jsErrorMessage JSErrorMessage
 			err = json.Unmarshal([]byte(query["r"][0]), &jsErrorMessage)
 			if err == nil {
+				utcTime := time.Now().UTC()
+				timestamp := utcTime.Format("2006/01/02 15:04:05 MST")
+				jsErrorMessage.Timestamp = timestamp
+				jsErrorMessage.RemoteAddr = r.RemoteAddr
+				jsErrorMessage.UserAgent = r.UserAgent()
 				jh.SendLog(&jsErrorMessage)
 			}
 		}
